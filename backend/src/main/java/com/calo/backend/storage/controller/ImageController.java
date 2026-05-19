@@ -27,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor//fianl 필드들을 인자로 받는 생성자를  컴파일 시점에 자동 생성해줌
 public class ImageController {
 
-    private final R2StorageService r2StorageService;//R2StorageService를 가져와서 쓰겠다고 선언.스프링이 알아서 R2StorageService의 인스턴스를 만들어서 주입해줌(의존성 주입)
+    private final R2StorageService r2StorageService;
     private final GeminiService geminiService;
     private final MealService mealService;
 

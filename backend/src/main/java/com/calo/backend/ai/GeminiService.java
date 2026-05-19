@@ -1,6 +1,5 @@
 package com.calo.backend.ai;
 
-import com.calo.backend.BackendApplication;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
@@ -17,15 +16,26 @@ import com.calo.backend.ai.dto.FoodAnalysis;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 //실제로 제미나이를 호출하는 코드
+/**
+ * ImageController에서 file.getBytes() 보냄
+ * GeminiService.analyzeFood(이미지바이트) <- 지금 보고 있는 코드
+ * 1. Gemini API 주소 만들기
+ * 2. 이미지를 Base64로 인코딩 (이미지를 텍스트 형태로 변환)
+ * 3. Gemini한테 줄 프롬프트(질문) 작성
+ * 4. 요청 body 만들기 (Gemini가 요구하는 형식)
+ * 5. HTTP 요청 보내기
+ * 6. 응답에서 텍스트 부분만 추출
+ * 7. JSON 부분만 깔끔하게 추출
+ * 8. JSON 문자열을 FoodAnalysis 객체로 변환
+ */
 @Service
 public class GeminiService {
 
-        private final BackendApplication backendApplication;
         /**
          * RestTemplate: http 요청 보낼 때 쓰는 도구
          * objectmapper: Json <-> java 객체 변환 도구
          */
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate = new RestTemplate();//이걸로 외부 api에 get, post 요청 보낼 수 있음
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     //yaml에서 api 키랑 모델 이름 가져오기      
@@ -34,13 +44,11 @@ public class GeminiService {
     @Value("${gemini.model}")
     private String model;
 
-    GeminiService(BackendApplication backendApplication) {
-        this.backendApplication = backendApplication;
-    }
-
         /**
          * 사진 데이터 받기->제미나이한테 보내기->결과 받아서 객체로 변환->리턴
-         * 
+         * 입력은 이미지 바이트 배열(MultipartFile.getBytes()의 결과물)
+         * 출력은 FoodAnalysis 객체 (음식 이름, 칼로리, 탄수화물, 단백질, 지방, 당 정보 담긴 객체)
+         * 예외 처리: 제미나이 호출 중에 문제가 생길 수 있으니까 예외 던지도록 throws Exception 붙여줌
          */
     public FoodAnalysis analyzeFood(byte[] imageBytes) throws Exception {
         // 1. Gemini API 주소 만들기
@@ -65,7 +73,11 @@ public class GeminiService {
                 정확한 수치를 모르겠으면 합리적으로 추정해서 채워줘.
                 """;
 
-        // 4. 요청 body 만들기 (Gemini가 요구하는 형식)
+        /**
+         * 4. 요청 body 만들기 (Gemini가 요구하는 형식) JSON 구조 만들기
+         * 가장 안쪽인 inline_data부터 { "mime_type": "image/jpeg", "data": "..." }
+         * inline_data를 키로 깜싼다. { "inline_data": { "mime_type": "...", "data": "..." } }
+         */
         Map<String, Object> requestBody = Map.of(
                 "contents", List.of(Map.of(
                         "parts", List.of(
