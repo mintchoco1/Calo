@@ -19,3 +19,16 @@
     이게 Db에 Insert 명령 보냄
 8. Mysql -meals 테이블에 한줄 추가됨
 9. 사용자한테 응답
+
+ImgageController 흐름
+1. 사용자가 사진 업로드
+2. ImageContoller 에서
+    R2업로드
+    제미나이 분석
+    MealService 호출
+        MealSerivce 에서
+            Meal 객체 만들기
+            DB 저장
+        MealRepository 에서
+            DB INSERT
+        저장된 Meal 객체 리턴

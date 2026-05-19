@@ -1,7 +1,5 @@
 package com.calo.backend.storage.controller;
 
-import java.util.Map;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,6 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.calo.backend.ai.GeminiService;
 import com.calo.backend.ai.dto.FoodAnalysis;
+import com.calo.backend.meal.entity.Meal;
+import com.calo.backend.meal.service.MealService;
 import com.calo.backend.storage.R2StorageService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,24 +29,22 @@ public class ImageController {
 
     private final R2StorageService r2StorageService;//R2StorageService를 가져와서 쓰겠다고 선언.스프링이 알아서 R2StorageService의 인스턴스를 만들어서 주입해줌(의존성 주입)
     private final GeminiService geminiService;
+    private final MealService mealService;
 
     /** 
      * POST /api/images/upload 요청을 메서드가 처리
      * @RequestParam("file") MultipartFile file → multipart/form-data 요청에서 file이라는 이름으로 들어온 파일을 받음
      * 클라이언트는 form-data로 file=바이너리를 보내야함
      */
- @PostMapping("/upload")
-    public Map<String, Object> upload(@RequestParam("file") MultipartFile file) throws Exception {
+    @PostMapping("/upload")
+    public Meal upload(@RequestParam("file") MultipartFile file) throws Exception {
         // 1. R2에 이미지 업로드
         String imageUrl = r2StorageService.upload(file);
 
         // 2. Gemini로 음식 분석
         FoodAnalysis analysis = geminiService.analyzeFood(file.getBytes());
 
-        // 3. 결과 반환
-        return Map.of(
-                "imageUrl", imageUrl,
-                "analysis", analysis
-        );
+        // 3. 식사 기록 생성 및 DB 저장 (MealService에 위임)
+        return mealService.createMealFromAnalysis(analysis, imageUrl);
     }
 }
