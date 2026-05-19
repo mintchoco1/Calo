@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: backend
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/calorie_tracker
+    username: root
+    password: rootpw
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+# {} 안에 있는 것들은 환경변수에서 값을 가져오라는 뜻
+# 이 환경변수들은 vscode에서 스프링부트 실행할 때 사용하는 설정 파일에 저장
+# 이렇게 하는 이유는 키를 코드에 직접 적으면 깃허브에 올릴때 노출됨
+# 제일 쉬운 방법은 launch.json 파일 만들어서 저장
+cloudflare:
+  r2:
+    access-key: ${R2_ACCESS_KEY}
+    secret-key: ${R2_SECRET_KEY}
+    endpoint: ${R2_ENDPOINT}
+    bucket: calorie-tracker-images
+    public-url: ${R2_PUBLIC_URL}
+
+gemini:
+  api-key: ${GEMINI_API_KEY}
+  model: gemini-2.0-flash
