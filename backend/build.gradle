@@ -29,6 +29,7 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testAnnotationProcessor 'org.projectlombok:lombok'
 
+    //re2에 이미지 업로드 api
 	implementation 'software.amazon.awssdk:s3:2.25.0'
 
     // Spring Dotenv 라이브러리 추가. .env 파일 읽기 위함.(cloud flare token)	

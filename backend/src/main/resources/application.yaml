@@ -33,6 +33,7 @@ cloudflare:
     bucket: calorie-tracker-images
     public-url: ${R2_PUBLIC_URL}
 
+# 제미나이 api 키
 gemini:
   api-key: ${GEMINI_API_KEY}
   model: gemini-2.0-flash
