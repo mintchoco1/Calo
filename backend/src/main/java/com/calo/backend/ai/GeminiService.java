@@ -43,13 +43,7 @@ public class GeminiService {
     private String apiKey;
     @Value("${gemini.model}")
     private String model;
-
-        /**
-         * 사진 데이터 받기->제미나이한테 보내기->결과 받아서 객체로 변환->리턴
-         * 입력은 이미지 바이트 배열(MultipartFile.getBytes()의 결과물)
-         * 출력은 FoodAnalysis 객체 (음식 이름, 칼로리, 탄수화물, 단백질, 지방, 당 정보 담긴 객체)
-         * 예외 처리: 제미나이 호출 중에 문제가 생길 수 있으니까 예외 던지도록 throws Exception 붙여줌
-         */
+    
     public FoodAnalysis analyzeFood(byte[] imageBytes) throws Exception {
         // 1. Gemini API 주소 만들기
         String url = "https://generativelanguage.googleapis.com/v1beta/models/"
@@ -81,8 +75,8 @@ public class GeminiService {
         Map<String, Object> requestBody = Map.of(
                 "contents", List.of(Map.of(
                         "parts", List.of(
-                                Map.of("text", prompt),
-                                Map.of("inline_data", Map.of(
+                                Map.of("text", prompt),            //질문 프롬프트 부분
+                                Map.of("inline_data", Map.of(      //이미지 데이터 부분
                                         "mime_type", "image/jpeg",
                                         "data", base64Image))))));
 
@@ -91,6 +85,7 @@ public class GeminiService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
 
+        //호출하는 순간 코드 실행하고 제민마이한테 jhttp 요청을 보내고 기다리고 제미나이가 응답을 보내줌. 다음줄 실행
         ResponseEntity<Map> response = restTemplate.postForEntity(url, entity, Map.class);
 
         // 6. 응답에서 텍스트 부분만 추출

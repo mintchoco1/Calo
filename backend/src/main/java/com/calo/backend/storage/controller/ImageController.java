@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
      *  컨트롤러는 받고 시키고 응답만 하고 실제 일은 서비스 계층이함. 
      */
 
-@RestController//Controller와 ResponseBody 합친 어노테이션. 이 컨트롤러는 JSON으로 응답할 거라고 알려줌
+@RestController//Controller와 ResponseBody 합친 어노테이션. 이 컨트롤러는 JSON으로 응답할 거라고 알려줌. Meal 객체를 자동으로 JSON으로 변환해서 응답해줌
 @RequestMapping("/api/images")
 @RequiredArgsConstructor//fianl 필드들을 인자로 받는 생성자를  컴파일 시점에 자동 생성해줌
 public class ImageController {
@@ -31,11 +31,6 @@ public class ImageController {
     private final GeminiService geminiService;
     private final MealService mealService;
 
-    /** 
-     * POST /api/images/upload 요청을 메서드가 처리
-     * @RequestParam("file") MultipartFile file → multipart/form-data 요청에서 file이라는 이름으로 들어온 파일을 받음
-     * 클라이언트는 form-data로 file=바이너리를 보내야함
-     */
     @PostMapping("/upload")
     public Meal upload(@RequestParam("file") MultipartFile file) throws Exception {
         // 1. R2에 이미지 업로드
@@ -45,6 +40,7 @@ public class ImageController {
         FoodAnalysis analysis = geminiService.analyzeFood(file.getBytes());
 
         // 3. 식사 기록 생성 및 DB 저장 (MealService에 위임)
+        //MealService한테 이 분석 결과랑 이미지 url로 Meal 기록 만들어서 DB에 저장하고 돌려줘라고 시킴
         return mealService.createMealFromAnalysis(analysis, imageUrl);
     }
 }

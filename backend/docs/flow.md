@@ -32,3 +32,23 @@ ImgageController 흐름
         MealRepository 에서
             DB INSERT
         저장된 Meal 객체 리턴
+
+http 요청이란?
+앱에서 사진 업로드 버튼을 누르면 앱이 서버한테 편지를 보냄. 이 편지가 http 요청
+편지는 정해진 양식이 있음
+어디로 보낼지:  POST /api/images/upload
+편지지 종류:    Content-Type: multipart/form-data
+--------------------------------------------
+편지 내용:      (여기에 파일 데이터가 들어감)
+근데 파일 업로드는 특별함. 파일 업로드는 일반 텍스트 전송이 아님. 이미지 바이너리 데이터를 보내야함.
+그래서 특별한 양식을 사용함. multipart/form-data
+이 형식은 편지 안에 여러 개의 조각(part)을 담을 수 잇음. 각 조각에는 이름표가 붙어 있음
+POST /api/images/upload
+Content-Type: multipart/form-data; boundary=---경계선
+
+-----경계선
+Content-Disposition: form-data; name="file"; filename="food.jpg"
+Content-Type: image/jpeg
+
+(여기에 이미지 바이너리 데이터 쭉...)
+-----경계선--
