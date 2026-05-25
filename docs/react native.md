@@ -27,3 +27,51 @@ gradle-wrapper.properties 에서 수정
 distributionUrl=https\://services.gradle.org/distributions/gradle-8.10.2-all.zip
 바꾸고 ./gradlew clean 
 gradlew은 gradle wrapper의 줄임말. gradle을 시스템에 전역 설치 없이 프로젝트 안에 내장된 Gradle로 실행하는 스크립트
+
+* npm start 
+Metro 번들러 서버 켜기
+app.tsx 같은 자바스크립트 코드를 실시간으로 묶어줌(번들링)
+코드 수정하면 자동으로 감지해서 에뮬레이터에 새 코드 전달
+포트 8081에서 동작
+
+* npx react-native run-android 
+안드로이드 앱 빌드 + 에뮬레이터에 설치 + 실행
+하는 일
+Gradle이 안드로이드 코드 컴파일
+APK 파일 생성(앱 설치 파일)
+에뮬레이터에 apk 설치
+앱 실행
+메트로 서버에 연결
+js 코드 받아와 화면에 표시
+┌──────────────────────────────────────────────┐
+│ 내 컴퓨터                                       │
+│                                               │
+│  ┌─────────────────┐                          │
+│  │ Metro 서버      │  ← 왼쪽 터미널 (npm start) │
+│  │ (포트 8081)      │                          │
+│  │                 │                          │
+│  │ App.tsx 코드    │                          │
+│  │ ↓ 실시간 번들링  │                          │
+│  └────────┬────────┘                          │
+│           │                                   │
+│           │ JS 코드 전달                       │
+│           ↓                                   │
+│  ┌─────────────────┐                          │
+│  │ 에뮬레이터        │  ← 앱이 여기서 실행됨        │
+│  │ (emulator-5554) │                          │
+│  │                 │                          │
+│  │ [내 앱 화면]      │                          │
+│  └─────────────────┘                          │
+│                                               │
+│  오른쪽 터미널은 빌드 끝나고 대기 상태              │
+└──────────────────────────────────────────────┘
+
+# 1. Android Studio → 에뮬레이터 켜기
+
+# 2. 터미널 1 — Metro 서버
+cd ~/Desktop/project/Calo/frontend
+npm start
+
+# 3. 터미널 2 — 앱 설치 (이미 설치되어 있으면 생략 가능)
+cd ~/Desktop/project/Calo/frontend
+npx react-native run-android
