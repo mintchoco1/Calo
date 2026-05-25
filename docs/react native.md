@@ -19,3 +19,11 @@ adb --version 로 체크까지
 리액트 네이티브는 모든 글자를 무조건 <Text> 안에 넣어야함
 
 npx @react-native-community/cli@latest init frontend
+
+* Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+이거는 Gradle 9.3.1 에서 deprecated된 기능을 사용 중이라는 뜻인데 리엑트 네이티브 0.85.3이 아직 Gradle 9.x 최신 버전과 호환되지 않는다는 뜻
+해결법으로 gradle 버전 낮추기
+gradle-wrapper.properties 에서 수정
+distributionUrl=https\://services.gradle.org/distributions/gradle-8.10.2-all.zip
+바꾸고 ./gradlew clean 
+gradlew은 gradle wrapper의 줄임말. gradle을 시스템에 전역 설치 없이 프로젝트 안에 내장된 Gradle로 실행하는 스크립트
