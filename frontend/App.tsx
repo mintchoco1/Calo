@@ -1,14 +1,37 @@
-import React from 'react';
-import { StatusBar, StyleSheet, Text, View } from 'react-native';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ */
 
-//리턴 안에 있는게 화면에 보여짐
+import { NewAppScreen } from '@react-native/new-app-screen';
+import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+
 function App() {
+  const isDarkMode = useColorScheme() === 'dark';
+
   return (
-    //가장 바깥 박스
+    <SafeAreaProvider>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <AppContent />
+    </SafeAreaProvider>
+  );
+}
+
+function AppContent() {
+  const safeAreaInsets = useSafeAreaInsets();
+
+  return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#0F1419" />
-      <Text style={styles.title}> CALO </Text>
-      <Text style={styles.subtitle}> 칼로리 트래커 </Text>
+      <NewAppScreen
+        templateFileName="App.tsx"
+        safeAreaInsets={safeAreaInsets}
+      />
     </View>
   );
 }
@@ -16,19 +39,6 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0F1419',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 48,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 18,
-    color: '#B0BEC5',
   },
 });
 
