@@ -22,12 +22,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.mysql:mysql-connector-j'
+	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testCompileOnly 'org.projectlombok:lombok'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testAnnotationProcessor 'org.projectlombok:lombok'
+
+	//액셀(.xlsx) 읽기용
+	implementation 'org.apache.poi:poi:5.2.5'
+	implementation 'org.apache.poi:poi-ooxml:5.2.5'
 
     //re2에 이미지 업로드 api
 	implementation 'software.amazon.awssdk:s3:2.25.0'

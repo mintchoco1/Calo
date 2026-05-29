@@ -69,9 +69,13 @@ js 코드 받아와 화면에 표시
 # 1. Android Studio → 에뮬레이터 켜기
 
 # 2. 터미널 1 — Metro 서버
+js 코드를 앱에 전달하는 서버
 cd ~/Desktop/project/Calo/frontend
 npm start
 
 # 3. 터미널 2 — 앱 설치 (이미 설치되어 있으면 생략 가능)
+앱을 안드로이드 기기/에뮬레이터에 설치 및 실행
+단 앱이 이미 기기에 설치가 되어 있으면 npm start만 키고 기기에서 앱을 직접 실행해도됨.
+이거는 앱을 새로 설치하거나 네이티브 코드가 바뀔 때만 필요함
 cd ~/Desktop/project/Calo/frontend
 npx react-native run-android
