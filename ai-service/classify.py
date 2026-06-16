@@ -10,7 +10,7 @@ classifier = pipeline(
 print("모델 로드 완료.")
 
 # 2. 분류할 이미지 로드
-image_path = "test_image.jpg"
+image_path = "test_image2.jpg"
 image = Image.open(image_path)
 print(f"이미지 로드: {image_path}, 크기: {image.size}")
 

@@ -19,6 +19,7 @@ java로 치면 프로젝트마다 별도 pom.xml / build.gradle 로 의존성을
 powershell 창 새로 열 때마다 다시 활성화 해야함
 (.venv) 가 붙으면 .venv/ 안의 격리된 Python이 동작함
 끄는 방법은 deactivate
+깃에서 켜는 방법은 source .venv/Scripts/activate
 
 패키지 설치
 pip install --upgrade pip
