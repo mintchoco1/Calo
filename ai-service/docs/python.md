@@ -17,6 +17,8 @@ java로 치면 프로젝트마다 별도 pom.xml / build.gradle 로 의존성을
 활성화되면 프롬프트 앞에 (.venv) 표시가 붙음 -> (.venv) PS C:\path\to\calo\ai-service> 이런식으로. 이게 보이면 성공
 앞으로 이 터미널에서 실행하는 python, pip은 모두 이 가상환경 안의 것을 사용
 powershell 창 새로 열 때마다 다시 활성화 해야함
+(.venv) 가 붙으면 .venv/ 안의 격리된 Python이 동작함
+끄는 방법은 deactivate
 
 패키지 설치
 pip install --upgrade pip
@@ -26,3 +28,9 @@ transformers: Hugging Face가 만든 라이브러리. SigLIP2 같은 모델을 f
 torch (PyTorch): 모델이 실제로 돌아가는 머신러닝 프레임 워크. SigLIP2는 PyTorch로 구현되어있음. 이게 가장 무거움. 수백 MB
 torchvision: PyTorch의 이미지 처리 헬퍼
 pillow (PIL): 이미지를 파이썬에서 로드/조작하는 라이브러리
+
+.venv는 깃에서 빼야함
+이거는 이 컴퓨터 전용이라 옮길 수 없음
+venv 만들 때 그 컴퓨터의 Python 경로를 박아놓음.
+그래서 폴더 자체는 못 옮기니까 requirements.txt 라는 텍스트 파일을 깃에 올림. 어떤 패키지가 필요한지 적힌 목록
+pip freeze > requirements.txt
