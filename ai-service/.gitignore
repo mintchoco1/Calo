@@ -1,0 +1,22 @@
+# Python virtual environment
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Hugging Face 모델 캐시 (혹시 로컬에 받으면)
+.cache/
+
+# IDE
+.vscode/
+.idea/
+
+# 환경 변수 파일
+.env
+
+# OS
+.DS_Store
+Thumbs.db
