@@ -9,6 +9,10 @@ ViT (Vision Transformer, 2020, google)
         → [위치 정보 추가] → [Transformer Encoder]
         → [CLS 토큰으로 분류]
 
+
+
+
+
 Softmax vs Sigmoid 차이
 Zero-shot 분류의 원리
 API 설계 트레이드오프 (JSON vs 콤마 구분)
