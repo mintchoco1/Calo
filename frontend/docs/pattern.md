@@ -11,3 +11,26 @@
 │ 샐러드                   │
 └─────────────────────────┘
 각 식사가 똑같은 구조로 반복됨. 이런거 만들 때 react에서 쓰는 패턴이 .map()
+
+임시로 mock data를 homescreen에 둔다. 즉 가짜 데이터
+배열의 각 요소를 화면에 표시하려면 자바스크립트의 .map() 메서드 사용
+
+기본 패턴
+{meals.map(meal => (
+  <View key={meal.id}>
+    <Text>{meal.name}</Text>
+  </View>
+))}
+임의로 만든 meal 배열의 각 meal에 대해서 이 jsx로 만들어라
+배열의 식사가 3개면 -> view가 3개 만들어짐
+5개면 5개 0개면 0개
+
+.map()은 그냥 자바스크립트 함수
+배열의 각 요소를 변환해서 새 배열을 만든다
+정확하게는 배열을 출력하는게 아니라 배열을 화면 요소 JSX로 변환
+
+TouchableOpacity 
+눌리는 영역을 만드는 컴포넌트. View랑 비슷한데 onPress가 있고 누르면 살짝 흐려지는 효과가 있음
+Button -> 기본 컴포넌트라 커스텀 안됨
+TouchableOpacity -> 안에 뭐든 넣을 수 있음. 누르면 흐려짐
+Pressable -> 더 최신

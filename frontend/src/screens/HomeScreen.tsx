@@ -43,10 +43,31 @@ function HomeScreen() {
       </View>
 
       <View style={styles.mealsSection}>
-        <Text>식단 영역</Text>
+        <Text style={styles.mealsTitle}>오늘의 식단</Text>
+        {meals.length === 0 ? (
+          /*비어있을 때 표시할 JSX*/
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyText}>오늘의 식단이 없습니다.</Text>
+            <Text style={styles.emptySubtext}>사진을 찍어 식단을 추가해보세요!</Text>
+          </View>
+        ) : (
+          /* 식단이 있을 때 표시할 JSX */
+          meals.map((meal) => (
+            <View key={meal.id} style={styles.mealItem}>
+              <View style={styles.thumbnail}>
+                <Text style={styles.thumbnailIcon}>📷</Text>
+              </View>
+              <View style={styles.mealInfo}>
+                <Text style={styles.mealTime}>{meal.time}</Text>
+                <Text style={styles.mealName}>{meal.name}</Text>
+              </View>
+              <Text style={styles.mealCalories}>{meal.calories} kcal</Text>
+            </View>
+          ))
+        )}
       </View>
 
-      <View style={styles.buttonSection}>
+      <View>
         <CameraButton />
       </View>
     </View>
@@ -55,14 +76,16 @@ function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,                            //가능한 공간을 다 차지하도록 설정
+    flex: 1,
     padding: 16,
-    //justifyContent: 'center',           //세로 중앙 정렬
-    //alignItems: 'center',               //가로 중앙 정렬
+    backgroundColor: '#F5F5F7',     // 연한 회색 배경
   },
+
+  // 날짜 카드
   dateSection: {
-    backgroundColor: '#FFE5E5',
+    backgroundColor: '#FFFFFF',     // 흰색
     padding: 16,
+    borderRadius: 12,               // 둥근 모서리
     marginBottom: 12,
   },
   dateLabel: {
@@ -74,20 +97,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 4,
   },
+
+  // 칼로리 카드
   calorieSection: {
-    backgroundColor: '#E5F0FF',
+    backgroundColor: '#FFFFFF',
     padding: 16,
+    borderRadius: 12,
     marginBottom: 12,
-  },
-  mealsSection: {
-    backgroundColor: '#E5FFE9',
-    padding: 16,
-    marginBottom: 12,
-    flex: 1,
-  },
-  buttonSection: {
-    backgroundColor: '#FFF5E5',
-    padding: 16,
   },
   calorieLabel: {
     fontSize: 14,
@@ -100,11 +116,11 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   nutrientRow: {
-    flexDirection: 'row',                 //RN의 기본은 세로 쌓기인데 이렇게 하면 가로로 쌓음
-    justifyContent: 'space-around',       //자식들 사이의 간격을 어떻게 배치할지 설정
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
   nutrientItem: {
-    alignItems: 'center',                 //flexDirection 반대 방향으로 정렬
+    alignItems: 'center',
   },
   nutrientName: {
     fontSize: 12,
@@ -115,6 +131,76 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 2,
   },
+
+  // 식사 리스트 카드
+  mealsSection: {
+    backgroundColor: '#FFFFFF',
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 12,
+    flex: 1,                        // 남은 공간 차지
+  },
+  mealsTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 12,
+  },
+  mealItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#EEE',
+  },
+  mealTime: {
+    fontSize: 12,
+    color: '#666',
+  },
+  mealName: {
+    fontSize: 16,
+    marginTop: 2,
+  },
+  mealCalories: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+
+  // 버튼 영역
+  buttonSection: {
+    backgroundColor: '#FFFFFF',
+    padding: 16,
+    borderRadius: 12,
+  },
+  emptyState: {
+    alignItems: 'center',
+    paddingVertical: 40,
+  },
+  emptyText: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 8,
+  },
+  emptySubtext: {
+    fontSize: 14,
+    color: '#999',
+  },
+
+  thumbnail: {
+    width: 48,
+    height: 48,
+    backgroundColor: '#F0F0F0',
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
+  },
+  thumbnailIcon: {
+    fontSize: 20,
+  },
+  mealInfo: {
+    flex: 1,          //남는 가로 공간 차지하라
+  },
 });
 
-export default HomeScreen;              //HomeScreen 컴포넌트를 내보냅니다. 다른 파일에서 이 컴포넌트를 사용할 수 있도록 합니다.
+export default HomeScreen;              //HomeScreen 컴포넌트를 내보냅니다. 다른 파일에서 이 컴포넌트를 사용
