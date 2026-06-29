@@ -1,13 +1,15 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'; //설치한 라이브러리에서 탭 navigator를 만드는 함수 가져옴
+import { MainTabsParamList } from './types'; //타입스크립트에서 사용할 타입 가져옴
 
 //각 탭에 해당하는 화면 컴포넌트들을 가져옴(화면들)
 import HomeScreen from '../screens/HomeScreen';
 import CalendarScreen from '../screens/CalendarScreen';
 import StatsScreen from '../screens/StatsScreen';
 
-const Tab = createBottomTabNavigator(); //탭 navigator의 인스턴스를 만듦. Tab.navigator와 Tab.Screen 같이 쓸 수 있게 해줌
+const Tab = createBottomTabNavigator<MainTabsParamList>(); //탭 navigator의 인스턴스를 만듦. Tab.navigator와 Tab.Screen 같이 쓸 수 있게 해줌
 
+// 상단에 헤더 빼고 전부가 maintab
 function MainTabs() {
     return (
         <Tab.Navigator>

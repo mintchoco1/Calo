@@ -27,3 +27,14 @@ navigation.navigate('Result', { foodName: '김치찌개' })
 지금은 화면들이 데이터를 받지 않으니까 다 undefined
 나중에 카메라에서 찍은거 화면에 띄울때는 값을 보내야됨
 
+MainTabs: NavigatorScreenParams<MainTabsParamList>
+MainTabs는 stack의 한 화면이지만 그 안에 또 다른 navigator가 들어있음
+stack=호텔객실(여러 객실)
+tab=객실 안의 tv채널
+NavigatorScreenParams<MainTabsParamList>가 이 객실에는 tv가 있고 채널은 이거야 라고 알려줌
+
+useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+useNavigation<...>() ... 타입의 navigation 객체를 줘
+NativeStackNavigationProp stack navigator의 navigation 객체 타입
+<RootStackParamList> 그 스택의 하면 목록은 이거다 라고 알려줌
+

@@ -1,14 +1,23 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CompositeNavigationProp } from '@react-navigation/native';
+
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { RootStackParamList, MainTabsParamList } from '../navigation/types';
+
+type NavigationProp = CompositeNavigationProp<
+  BottomTabNavigationProp<MainTabsParamList>,
+  NativeStackNavigationProp<RootStackParamList>
+  >;
 
 function CameraButton() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
 
   return (
     <TouchableOpacity
       style={styles.button}
-      onPress={() => navigation.navigate('Camera' as never)}
+      onPress={() => navigation.navigate('Camera')}
     >
       <Text style={styles.buttonText}>📷  사진 찍기</Text>
     </TouchableOpacity>

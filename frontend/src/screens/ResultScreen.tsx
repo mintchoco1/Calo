@@ -1,9 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { useRoute, RouteProp } from '@react-navigation/native';
 import GoHomeButton from '../components/GoHomeButton';
+import { RootStackParamList } from '../navigation/types';
+
+type ResultRouteProp = RouteProp<RootStackParamList, 'Result'>;
 
 function ResultScreen() {
-  // 임시 mock 데이터 (나중에 백엔드에서 받아올 거)
+  const route = useRoute<ResultRouteProp>();
+  const { photoPath } = route.params;
+
   const result = {
     name: '김치찌개',
     calories: 520,
@@ -16,8 +22,14 @@ function ResultScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.imageSection}>
-        <Text style={styles.imageIcon}>📷</Text>
-        <Text style={styles.imageLabel}>사진 자리 (placeholder)</Text>
+        {photoPath ? (
+          <Image source={{ uri: `file://${photoPath}` }} style={styles.image} />
+        ) : (
+          <>
+            <Text style={styles.imageIcon}>📷</Text>
+            <Text style={styles.imageLabel}>사진 자리 (placeholder)</Text>
+          </>
+        )}
       </View>
 
       <View style={styles.infoSection}>
@@ -26,7 +38,7 @@ function ResultScreen() {
 
         <View style={styles.divider} />
 
-        <Text style={styles.nutrientsTitle}>영양 정보</Text>
+        <Text style={styles.nutrientsTitle}>영양 성분</Text>
 
         <View style={styles.nutrientRow}>
           <Text style={styles.nutrientLabel}>탄수화물</Text>
@@ -41,7 +53,7 @@ function ResultScreen() {
           <Text style={styles.nutrientValue}>{result.fat}g</Text>
         </View>
         <View style={styles.nutrientRow}>
-          <Text style={styles.nutrientLabel}>당류</Text>
+          <Text style={styles.nutrientLabel}>당분</Text>
           <Text style={styles.nutrientValue}>{result.sugar}g</Text>
         </View>
       </View>
@@ -68,8 +80,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
-  //영양 정보
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+  imageIcon: {
+    fontSize: 64,
+    marginBottom: 8,
+  },
+  imageLabel: {
+    fontSize: 14,
+    color: '#999',
+  },
   infoSection: {
     flex: 1,
     padding: 16,
@@ -108,20 +130,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-
   buttonSection: {
     padding: 16,
   },
-
-  imageIcon: {
-    fontSize: 64,
-    marginBottom: 8,
-  },
-  imageLabel: {
-    fontSize: 14,
-    color: '#999',
-  },
-  
   saveButton: {
     backgroundColor: '#007AFF',
     paddingVertical: 16,

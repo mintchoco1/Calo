@@ -1,14 +1,18 @@
 import React from 'react';
 import { Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../navigation/types';
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 function GoHomeButton() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
 
   return (
     <Button 
       title="처음으로" 
-      onPress={() => (navigation as any).popToTop()} //임시 방편
+      onPress={() => navigation.popToTop()} 
     />
   );
 }

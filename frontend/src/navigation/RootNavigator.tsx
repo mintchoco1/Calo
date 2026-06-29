@@ -1,11 +1,15 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { RootStackParamList } from './types';
 
 import MainTabs from './MainTabs';
 import CameraScreen from '../screens/CameraScreen';
 import ResultScreen from '../screens/ResultScreen';
 
-const Stack = createNativeStackNavigator();
+//타입을 인자로 넘김(제네릭)
+//stack을 만들건데 그 stack은 RootStackParamList에 정의된 화면들만 가진
+//라이브러리가 그 정보를 받아서 타입 검사를 그 기준으로 해줌
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
     return (

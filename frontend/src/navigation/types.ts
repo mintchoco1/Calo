@@ -11,5 +11,5 @@ export type MainTabsParamList = {
 export type RootStackParamList = {
   MainTabs: NavigatorScreenParams<MainTabsParamList>;
   Camera: undefined;
-  Result: undefined;
+  Result: { photoPath: string };
 };
