@@ -1,3 +1,4 @@
+import torch
 from transformers import pipeline
 from PIL import Image
 from typing import List
@@ -5,17 +6,24 @@ from typing import List
 # 전역 변수로 모델을 보관. None으로 초기화하고, 서버 시작 시 채움.
 _classifier = None
 
-
 def load_model():
     """서버 시작 시 한 번만 호출. 모델을 메모리에 올림."""
     global _classifier
-    print("SigLIP2 모델 로딩 중...")
+    
+    # GPU 사용 가능하면 0번 GPU, 아니면 CPU(-1)
+    # CUDA(GPU)를 쓸 수 있는지 True/False로 반환
+    device = 0 if torch.cuda.is_available() else -1
+
+    # GPU 이름 가져오기 (0번 GPU 사용 시)
+    device_name = torch.cuda.get_device_name(0) if device == 0 else "CPU"
+    
+    print(f"SigLIP2 모델 로딩 중... (디바이스: {device_name})")
     _classifier = pipeline(
         task="zero-shot-image-classification",
-        model="google/siglip2-base-patch16-224"
+        model="google/siglip2-base-patch16-224",
+        device=device,
     )
     print("SigLIP2 모델 로드 완료.")
-
 
 def classify_image(image: Image.Image, candidate_labels: List[str]) -> list:
     """이미지와 라벨 후보를 받아 분류 결과 반환."""
